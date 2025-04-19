@@ -11,8 +11,8 @@ module.exports = {
             fontSize: {
                 'preset-1': ['20px', {
                     lineHeight: '130%',
-                    letterSpacing: '0.25em',
-                    fontWeight: '900'
+                    letterSpacing: '0.25px',
+                    fontWeight: '700'
                 }],
                 'preset-2-medium': ['13px', {
                     lineHeight: '140%',
@@ -22,7 +22,7 @@ module.exports = {
                 'preset-2-bold': ['13px', {
                     lineHeight: '140%',
                     letterSpacing: '0.0012em',
-                    fontWeight: '900'
+                    fontWeight: '700'
                 }],
                 'preset-3': ['13px', {lineHeight: '140%', letterSpacing: '0.25em'}],
             },

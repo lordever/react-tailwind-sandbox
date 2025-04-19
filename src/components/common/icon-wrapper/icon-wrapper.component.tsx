@@ -7,7 +7,7 @@ interface IconWrapperProps {
 const IconWrapper: FC<IconWrapperProps> = ({children}) => {
     if (isValidElement(children)) {
         return (
-            <div className='flex items-center justify-center bg-gray-500 p-2 rounded-full'>
+            <div className='flex items-center self-center justify-center bg-gray-200 p-2 rounded-full'>
                 {children}
             </div>
         );
