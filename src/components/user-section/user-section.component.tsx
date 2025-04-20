@@ -23,9 +23,9 @@ const UserSection: FC<UserSectionProps> = ({selected}) => {
                 <img src={avatarImg} alt="avatar" className='rounded-full w-10 h-10'/>
 
                 <div className="flex flex-col">
-                    <h5 className='text-preset-2-bold text-gray-900'>
+                    <h4 className='text-preset-2-bold text-gray-900'>
                         Michelle Appleton
-                    </h5>
+                    </h4>
 
                     <span className='text-preset-2-medium text-gray-400'>28 Jun 2020</span>
                 </div>
