@@ -14,11 +14,12 @@ const Card = () => {
              onClick={handleUserSectionClick}>
             <img src={drawersImg}
                  alt='drawers'
-                 className='rounded-tl-xl rounded-tr-xl md:rounded-tr-none  md:rounded-bl-xl w-full md:w-[285px] h-[280px]'/>
+                 className='rounded-tl-xl rounded-tr-xl md:rounded-tr-none  md:rounded-bl-xl w-full
+                 md:w-[285px] h-auto'/>
 
-            <div className="flex flex-col gap-6 w-[440px] bg-white md:rounded-tr-xl rounded-bl-xl
+            <div className="flex flex-col gap-[50px] md:gap-6 md:w-[440px] bg-white md:rounded-tr-xl rounded-bl-xl
                             md:rounded-bl-none rounded-br-xl pt-10">
-                <div className='flex flex-col gap-6 px-[30px]'>
+                <div className='flex flex-col gap-6 px-[30px] lg:w-[400px]'>
                     <h3 className='text-preset-1 text-gray-900'>
                         Shift the overall look and feel by adding these wonderful touches to
                         furniture

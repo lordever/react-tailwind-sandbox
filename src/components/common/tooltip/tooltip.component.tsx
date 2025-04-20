@@ -20,7 +20,8 @@ const Tooltip: FC<TooltipProps> = ({open, content, children}) => {
                     'transition-opacity before:content-[""] before:absolute before:bottom-[-4px]' +
                     ' before:left-1/2 before:-translate-x-1/2',
                     'before:w-4 before:h-4 before:bg-gray-900 before:rotate-45',
-                    open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+                    open ? 'block opacity-100 pointer-events-auto' : 'hidden opacity-0' +
+                        ' pointer-events-none'
                 )}
             >
                 {content}

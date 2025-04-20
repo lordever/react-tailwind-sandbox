@@ -18,7 +18,7 @@ const UserSection: FC<UserSectionProps> = ({selected}) => {
     }
 
     return (
-        <div className='flex flex-row items-center justify-between px-[30px] pb-[30px] md:pb-0'>
+        <div className='flex flex-row items-center justify-between px-[30px] pb-[18px] md:pb-[30px]'>
             <div className='flex flex-row gap-4 items-center'>
                 <img src={avatarImg} alt="avatar" className='rounded-full w-10 h-10'/>
 
