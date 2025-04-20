@@ -1,22 +1,28 @@
 import React, {FC, memo} from 'react';
+import cn from 'classnames';
 
 interface TooltipProps {
     children: React.ReactNode;
     content: React.ReactNode;
+    open?: boolean;
 }
 
-const Tooltip: FC<TooltipProps> = ({content, children}) => {
+const Tooltip: FC<TooltipProps> = ({open, content, children}) => {
     return (
-        <div className='flex items-center justify-center flex-col-reverse'>
-            <div className='peer'>
-                {children}
-            </div>
+        // Tooltip
+        <div className="relative inline-block">
+            {children}
 
-            <div className="relative z-10 bottom-2 bg-gray-900 px-[38px] py-[18px] text-white text-sm
-                            rounded-xl shadow-lg opacity-0 peer-hover:opacity-100 transition-opacity
-                            before:content-[''] before:absolute before:bottom-[-4px] before:left-1/2
-                            before:-translate-x-1/2 before:w-4 before:h-4
-                            before:bg-gray-900 before:rotate-45 before:z-0">
+            <div
+                className={cn(
+                    'absolute z-10 left-1/2 -translate-x-1/2 bottom-full mb-2',
+                    'bg-gray-900 px-[38px] py-[18px] text-white text-sm rounded-xl shadow-lg',
+                    'transition-opacity before:content-[""] before:absolute before:bottom-[-4px]' +
+                    ' before:left-1/2 before:-translate-x-1/2',
+                    'before:w-4 before:h-4 before:bg-gray-900 before:rotate-45',
+                    open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+                )}
+            >
                 {content}
             </div>
         </div>

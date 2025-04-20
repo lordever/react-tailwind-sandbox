@@ -1,11 +1,24 @@
-import React from 'react';
+import React, {FC, memo} from 'react';
 import avatarImg from '../../assets/images/avatar-michelle.jpg';
-import IconWrapper from "../common/icon-wrapper/icon-wrapper.component";
-import {ReactComponent as ShareIcon} from '../../assets/images/icon-share.svg';
+import {useMediaQuery} from "react-responsive";
+import ShareMobileSection from "../share/share-section/share-section.component";
+import Tooltip from "../common/tooltip/tooltip.component";
+import ShareContent from "../share/share-content/share-content.component";
+import ShareIconWrapper from "../share/share-icon-wrapper/share-icon-wrapper.component";
 
-const UserSection = () => {
+interface UserSectionProps {
+    selected: boolean;
+}
+
+const UserSection: FC<UserSectionProps> = ({selected}) => {
+    const isMobile = useMediaQuery({maxWidth: 767});
+
+    if (isMobile && selected) {
+        return <ShareMobileSection/>
+    }
+
     return (
-        <div className='flex flex-row items-center justify-between pb-[30px] md:pb-0'>
+        <div className='flex flex-row items-center justify-between px-[30px] pb-[30px] md:pb-0'>
             <div className='flex flex-row gap-4 items-center'>
                 <img src={avatarImg} alt="avatar" className='rounded-full w-10 h-10'/>
 
@@ -18,11 +31,11 @@ const UserSection = () => {
                 </div>
             </div>
 
-            <IconWrapper>
-                <ShareIcon/>
-            </IconWrapper>
+            <Tooltip open={selected} content={<ShareContent/>}>
+                <ShareIconWrapper active={selected}/>
+            </Tooltip>
         </div>
     );
 };
 
-export default UserSection;
+export default memo(UserSection);
