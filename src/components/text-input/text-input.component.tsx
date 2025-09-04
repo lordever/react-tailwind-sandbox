@@ -41,9 +41,9 @@ const TextInput: FC<TextInputProps> = (props) => {
     const showError = touched && !isEmpty && hasError;
 
     const classNames = clsx(
-        'rounded-md pl-[24px] h-[56px] min-w-[356px]',
+        'rounded-md pl-[24px] h-[56px] min-w-[356px] focus:outline-none',
         showError
-            ? 'border border-red text-red placeholder:text-red'
+            ? 'border border-red text-red bg-red-100 placeholder:text-red'
             : 'border border-gray focus:border-blue-800 placeholder:text-gray',
         className
     );

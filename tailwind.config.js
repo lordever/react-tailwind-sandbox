@@ -31,6 +31,7 @@ module.exports = {
                 'slate-900': '#133041',
                 'gray-700': '#36384D',
                 'red': '#FF6155',
+                'red-100': '#FFE7E6',
                 'gradient4_from': '#FF6A3A',
                 'gradient4_to': '#FF527B'
             },
