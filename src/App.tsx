@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import TextInput from "./components/text-input/text-input.component";
 import {isValidEmail} from "./utils/email.util";
+import Button from "./components/button/button.component";
 
 function App() {
     const [value, setValue] = useState("");
@@ -34,6 +35,11 @@ function App() {
                 />
             </div>
 
+            <div className='flex flex-col gap-2 mt-2 max-w-[320px]'>
+                <Button name={'Subscribe to monthly newsletter'} onClick={() => {}} variant={'primary'} />
+                <Button name={'Subscribe to monthly newsletter'} onClick={() => {}} variant={'secondary'} />
+            </div>
+            
         </div>
     );
 }
