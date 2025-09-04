@@ -4,9 +4,52 @@ module.exports = {
         "./src/**/*.{js,jsx,ts,tsx}",
     ],
     theme: {
+        textColor: {
+            DEFAULT: "#133041"
+        },
         extend: {
             fontFamily: {
-                sans: ['Red Hat Display', 'sans-serif']
+                sans: ['Roboto', 'sans-serif']
+            },
+            fontSize: {
+                'preset-1': ['56px', {
+                    lineHeight: '100%',
+                    letterSpacing: '0px',
+                    fontWeight: '700'
+                }],
+                'preset-1-mobile': ['88px', {
+                    lineHeight: '100%',
+                    letterSpacing: '0px',
+                    fontWeight: '700'
+                }],
+                'preset-2': ['16px', {
+                    lineHeight: '150%',
+                    letterSpacing: '0px'
+                }],
+                'preset-3': ['12px', {lineHeight: '150%', letterSpacing: '0px'}],
+            },
+            colors: {
+                'grey': '#949494',
+                'blue-800': '#242742',
+                'slate-900': '#133041',
+                'gray-700': '#36384D',
+                'red': '#FF6155',
+                'gradient4_from': '#FF6A3A',
+                'gradient4_to': '#FF527B'
+            },
+            backgroundImage: {
+                'gradient-4': 'linear-gradient(to right, #FF6A3A, #FF527B)',
+            },
+            spacing: {
+                100: '8px',
+                200: '16px',
+                300: '24px',
+                400: '32px',
+                500: '40px',
+                600: '48px',
+                800: '64px',
+                900: '72px',
+                1300: '104px',
             }
         },
     },
