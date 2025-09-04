@@ -4,9 +4,6 @@ module.exports = {
         "./src/**/*.{js,jsx,ts,tsx}",
     ],
     theme: {
-        textColor: {
-            DEFAULT: "#133041"
-        },
         extend: {
             fontFamily: {
                 sans: ['Roboto', 'sans-serif']
@@ -26,10 +23,10 @@ module.exports = {
                     lineHeight: '150%',
                     letterSpacing: '0px'
                 }],
-                'preset-3': ['12px', {lineHeight: '150%', letterSpacing: '0px'}],
+                'preset-3': ['12px', {lineHeight: '150%', letterSpacing: '0px', fontWeight: '700'}],
             },
             colors: {
-                'grey': '#949494',
+                'gray': '#949494',
                 'blue-800': '#242742',
                 'slate-900': '#133041',
                 'gray-700': '#36384D',
