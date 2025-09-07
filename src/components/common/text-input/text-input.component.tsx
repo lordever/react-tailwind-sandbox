@@ -16,7 +16,7 @@ interface TextInputProps extends NativeInputProps {
   errorMessage?: string;
 }
 
-const TextInput: FC<TextInputProps> = (props) => {
+const EmailTextInput: FC<TextInputProps> = (props) => {
   const {
     value,
     label,
@@ -80,10 +80,11 @@ const TextInput: FC<TextInputProps> = (props) => {
         aria-invalid={!valid || undefined}
         aria-describedby={errorId}
         onChange={handleChange}
+        type="email"
         {...rest}
       />
     </div>
   );
 };
 
-export default TextInput;
+export default EmailTextInput;

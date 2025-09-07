@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import TextInput from '../../common/text-input/text-input.component';
+import EmailTextInput from '../../common/text-input/text-input.component';
 import { isValidEmail } from '../../../utils/email.util';
 import Button, { ButtonVariants } from '../../common/button/button.component';
 
@@ -27,7 +27,7 @@ const SubscribeCardForm: FC<SubscribeCardFormProps> = ({ onSuccess }) => {
 
   return (
     <>
-      <TextInput
+      <EmailTextInput
         value={email || ''}
         label="Email address"
         onValueChange={handleChange}
