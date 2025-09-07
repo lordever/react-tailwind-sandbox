@@ -3,7 +3,8 @@ import Card from '../common/card/card.component';
 import TextInput from '../common/text-input/text-input.component';
 import { isValidEmail } from '../../utils/email.util';
 import Button, { ButtonVariants } from '../common/button/button.component';
-import checkmark from '../../assets/checkmark.svg';
+import List from '../common/list/list.component';
+import ListItem from '../common/list/list-item/list-item.component';
 
 const SubscribeCard = () => {
   const [email, setEmail] = useState('');
@@ -19,14 +20,11 @@ const SubscribeCard = () => {
               Join 60,000+ product managers receiving monthly updates on:
             </p>
 
-            <ul
-              className="list-disc list-inside self-center flex flex-col gap-2 "
-              style={{ listStyleImage: `url(${checkmark})` }}
-            >
-              <li>Product discovery and building what matters</li>
-              <li>Measuring to ensure updates are a success</li>
-              <li>And much more!</li>
-            </ul>
+            <List>
+              <ListItem>Product discovery and building what matters</ListItem>
+              <ListItem>Measuring to ensure updates are a success</ListItem>
+              <ListItem>And much more!</ListItem>
+            </List>
 
             <TextInput
               value={email}

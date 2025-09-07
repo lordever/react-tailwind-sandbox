@@ -6,11 +6,11 @@ export enum ButtonVariants {
   SECONDARY = 'secondary',
 }
 
-interface ButtonProps {
+type ButtonProps = {
   name: string;
   onClick: () => void;
   variant: ButtonVariants;
-}
+};
 
 const Button: FC<ButtonProps> = ({ name, onClick, variant }) => {
   const className = clsx(
