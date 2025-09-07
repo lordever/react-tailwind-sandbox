@@ -8,29 +8,38 @@ type SubscribeCardFormProps = {
 };
 
 const SubscribeCardForm: FC<SubscribeCardFormProps> = ({ onSuccess }) => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState<string>("");
+  const [formValid, setFormValid] = useState(true);
+
+  const handleChange = (value: string) => {
+    setEmail(value);
+    setFormValid(isValidEmail(value));
+  };
 
   const handleSubmit = () => {
-    if (isValidEmail(email)) {
+    if (formValid && email) {
       onSuccess(email);
+      setEmail('');
+    } else {
+      setFormValid(isValidEmail(email));
     }
   };
 
   return (
     <>
       <TextInput
-        value={email}
+        value={email || ''}
         label="Email address"
-        onValueChange={setEmail}
+        onValueChange={handleChange}
         placeholder="Input your e-mail address"
-        inputValidator={isValidEmail}
+        valid={formValid}
         errorMessage="Valid email required"
       />
 
       <Button
         name="Subscribe to monthly newsletter"
         onClick={handleSubmit}
-        variant={ButtonVariants.PRIMARY}
+        variant={formValid ? ButtonVariants.PRIMARY : ButtonVariants.SECONDARY}
       />
     </>
   );
