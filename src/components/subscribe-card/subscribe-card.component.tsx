@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, {FC} from 'react';
 import Card from '../common/card/card.component';
-import TextInput from '../common/text-input/text-input.component';
-import { isValidEmail } from '../../utils/email.util';
-import Button, { ButtonVariants } from '../common/button/button.component';
 import List from '../common/list/list.component';
 import ListItem from '../common/list/list-item/list-item.component';
+import SubscribeCardForm from './form/subscribe-card-form.component';
 
-const SubscribeCard = () => {
-  const [email, setEmail] = useState('');
+type SubscribeCardProps = {
+  onSuccessForm: (email: string) => void;
+}
 
+const SubscribeCard: FC<SubscribeCardProps> = ({onSuccessForm}) => {
   return (
     <section className="flex items-center justify-center w-full h-full">
       <Card>
@@ -26,20 +26,7 @@ const SubscribeCard = () => {
               <ListItem>And much more!</ListItem>
             </List>
 
-            <TextInput
-              value={email}
-              label="Email address"
-              onValueChange={setEmail}
-              placeholder="Input your e-mail address"
-              inputValidator={isValidEmail}
-              errorMessage="Valid email required"
-            />
-
-            <Button
-              name="Subscribe to monthly newsletter"
-              onClick={() => {}}
-              variant={ButtonVariants.PRIMARY}
-            />
+            <SubscribeCardForm onSuccess={onSuccessForm} />
           </div>
 
           {/*Banner section*/}
