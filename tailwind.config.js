@@ -50,6 +50,7 @@ module.exports = {
                 'gray-50': '#F3F9FA',
                 'green-900': '#00474B',
                 'green-800': '#085C61',
+                'green-750': '#0D686D',
                 'green-400': '#26C2AE',
                 'green-200': '#9FE8DF',
                 'orange-400': '#E17052',
