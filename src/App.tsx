@@ -1,12 +1,16 @@
 import React from 'react';
 import './App.css';
+import ComplicatedTab from './component-compound-pattern/bad-practice/bad-tab.component';
+import CompounedComponentBasedTab
+    from './component-compound-pattern/good-practice/compounded-tab.component';
 
 function App() {
-  return (
-      <h1 className="text-3xl font-bold underline">
-        Hello world!
-      </h1>
-  );
+    return (
+        <>
+            <ComplicatedTab/>
+            <CompounedComponentBasedTab/>
+        </>
+    );
 }
 
 export default App;
