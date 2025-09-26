@@ -1,76 +1,29 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import './App.css';
-import Button from './components/common/button/button.component';
-import Input from './components/common/input/input.component';
-import { TipCard } from './components/tip-card';
+import { TipCalculator } from './components/tip-calculator';
 
 function App() {
-  const [value, setValue] = useState<string>();
-
-  const handleValueChange = useCallback(
-    (v: string) => {
-      setValue(v);
-    },
-    [setValue],
-  );
-
   return (
-    <div className="m-2 flex flex-col gap-5">
-      <div className="flex flex-row gap-2">
-        <Button onClick={() => {}}>15%</Button>
-      </div>
+    <main className="flex min-h-full w-full items-center justify-center">
+      <section className="max-w-[920px]">
+        <TipCalculator.Root
+          allowedPercents={[5, 10, 15, 20, 30, 50]}
+          bill={0}
+          selectedTipPercent={15}
+          numberOfPeople={0}
+        >
+          <TipCalculator.Content>
+            <TipCalculator.Cols>
+              <TipCalculator.BillInput />
 
-      <div className="flex flex-row gap-2">
-        <Input
-          label="Number of People"
-          value={value}
-          onValueChange={handleValueChange}
-          placeholder="0"
-          error="Can't be zero"
-        />
-      </div>
+              <TipCalculator.TipSelector />
 
-      <div className="flex flex-row gap-2">
-        <section className="max-w-[413px]">
-          <TipCard.Root amount="12.50" total="87.40" onReset={() => {}}>
-            <TipCard.Row>
-              <TipCard.Value
-                kind="amount"
-                label="Tip Amount"
-                subLabel="/ person"
-              />
-              <TipCard.Value kind="total" label="Total" subLabel="/ person" />
-            </TipCard.Row>
-
-            <TipCard.Actions>
-              <TipCard.Reset />
-            </TipCard.Actions>
-          </TipCard.Root>
-        </section>
-
-        <section className="max-w-[413px]">
-          <TipCard.Root
-            amount="12.50"
-            total="87.40"
-            resetDisabled
-            onReset={() => {}}
-          >
-            <TipCard.Row>
-              <TipCard.Value
-                kind="amount"
-                label="Tip Amount"
-                subLabel="/ person"
-              />
-              <TipCard.Value kind="total" label="Total" subLabel="/ person" />
-            </TipCard.Row>
-
-            <TipCard.Actions>
-              <TipCard.Reset />
-            </TipCard.Actions>
-          </TipCard.Root>
-        </section>
-      </div>
-    </div>
+              <TipCalculator.NumberOfPeopleInput />
+            </TipCalculator.Cols>
+          </TipCalculator.Content>
+        </TipCalculator.Root>
+      </section>
+    </main>
   );
 }
 

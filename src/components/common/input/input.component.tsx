@@ -1,56 +1,69 @@
-import React, { ChangeEvent, FC, memo, useMemo } from 'react';
+import React, { ChangeEvent, useId } from 'react';
 import clsx from 'clsx';
 
-type InputProps = {
+type CommonProps = {
   label: string;
-  value?: string;
   placeholder: string;
-  onValueChange: (value: string) => void;
   error?: string;
 };
 
-const Input: FC<InputProps> = ({
-  error,
-  onValueChange,
-  value,
-  label,
-  placeholder,
-}) => {
-  const id = useMemo(() => Math.random().toString(), []);
+type StringInputProps = CommonProps & {
+  kind?: 'string';
+  value: string;
+  onValueChange: (value: string) => void;
+};
+
+type NumberInputProps = CommonProps & {
+  kind: 'number';
+  value: number;
+  onValueChange: (value: number) => void;
+  allowNegative?: boolean;
+};
+
+export type InputProps = StringInputProps | NumberInputProps;
+
+export function Input(props: InputProps) {
+  const id = useId();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onValueChange(e.target.value);
+    const raw = e.target.value;
+
+    if (props.kind === 'number') {
+      const trimmed = raw.trim();
+      if (trimmed === '' || trimmed === '-' || trimmed === '+') {
+        props.onValueChange(0);
+        return;
+      }
+      const n = Number(trimmed);
+      if (!Number.isFinite(n)) return;
+      if (!props.allowNegative && n < 0) return;
+      props.onValueChange(n);
+    } else {
+      props.onValueChange(raw);
+    }
   };
 
-  const labelClassName = useMemo(() => clsx('text-preset-5 text-gray-500'), []);
-  const errorLabelClassName = useMemo(
-    () => clsx('text-preset-5 text-orange-400'),
-    [],
+  const labelClassName = clsx('text-preset-5 text-gray-500');
+  const errorLabelClassName = clsx('text-preset-5 text-orange-400');
+  const inputClassName = clsx(
+    'min-w-[379px] rounded-md bg-gray-50 p-2 pl-12 text-right text-preset-3 text-green-900',
+    'outline-none focus:border-2 focus:border-green-400 focus-visible:border-green-400',
+    !!props.error && 'border-2 border-orange-400',
   );
 
-  const inputClassName = useMemo(
-    () =>
-      clsx(
-        'pl-12 min-w-[379px] rounded-md bg-gray-50 p-2 text-right text-preset-3' +
-        ' text-green-900' +
-          ' focus:border-2' +
-          ' focus:border-green-400' +
-          ' outline-none focus-visible:border-green-400',
-        !!error && 'border-2 border-orange-400',
-      ),
-    [error],
-  );
+  const stringValue =
+    props.kind === 'number' ? String(props.value ?? '') : (props.value ?? '');
 
   return (
     <div className="flex flex-col gap-3">
       <div className="flex flex-row justify-between">
         <label className={labelClassName} htmlFor={id}>
-          {label}
+          {props.label}
         </label>
 
-        {error && (
+        {props.error && (
           <label className={errorLabelClassName} htmlFor={id}>
-            {label}
+            {props.error}
           </label>
         )}
       </div>
@@ -59,19 +72,19 @@ const Input: FC<InputProps> = ({
         <img
           className="absolute left-4 top-[18px]"
           src="/user-icon.svg"
-          alt="user-icon"
+          alt=""
         />
         <input
-          className={inputClassName}
           id={id}
+          className={inputClassName}
           type="text"
-          value={value}
-          placeholder={placeholder}
+          inputMode={props.kind === 'number' ? 'decimal' : 'text'}
+          placeholder={props.placeholder}
+          value={stringValue}
           onChange={handleInputChange}
+          aria-invalid={!!props.error}
         />
       </div>
     </div>
   );
-};
-
-export default memo(Input);
+}
