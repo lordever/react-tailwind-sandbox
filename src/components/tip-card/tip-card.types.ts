@@ -1,6 +1,6 @@
 export type TipCard = {
-  amount: string;
-  total: string;
+  amount: number;
+  total: number;
   resetDisabled?: boolean;
   onReset: () => void;
 };

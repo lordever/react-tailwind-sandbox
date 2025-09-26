@@ -1,14 +1,15 @@
 export type TipCalculatorState = {
-  bill: number;
-  selectedTipPercent: number;
-  numberOfPeople: number;
+  bill?: number;
+  selectedTipPercent?: number;
+  numberOfPeople?: number;
   allowedPercents: number[];
 };
 
 export type TipCalculatorActions = {
-  setBill: (value: number) => void;
-  setSelectedTipPercent: (value: number) => void;
-  setNumberOfPeople: (value: number) => void;
+  setBill: (value: number | undefined) => void;
+  setSelectedTipPercent: (value: number | undefined) => void;
+  setNumberOfPeople: (value: number | undefined) => void;
+  resetAll: () => void;
 };
 
 export type TipCalculatorContextValue = {

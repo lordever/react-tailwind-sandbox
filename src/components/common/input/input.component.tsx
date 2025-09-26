@@ -9,14 +9,14 @@ type CommonProps = {
 
 type StringInputProps = CommonProps & {
   kind?: 'string';
-  value: string;
-  onValueChange: (value: string) => void;
+  value?: string;
+  onValueChange: (value: string | undefined) => void;
 };
 
 type NumberInputProps = CommonProps & {
   kind: 'number';
-  value: number;
-  onValueChange: (value: number) => void;
+  value?: number;
+  onValueChange: (value: number | undefined) => void;
   allowNegative?: boolean;
 };
 
@@ -30,16 +30,23 @@ export function Input(props: InputProps) {
 
     if (props.kind === 'number') {
       const trimmed = raw.trim();
-      if (trimmed === '' || trimmed === '-' || trimmed === '+') {
-        props.onValueChange(0);
+
+      if (trimmed === '') {
+        props.onValueChange(undefined);
         return;
       }
-      const n = Number(trimmed);
-      if (!Number.isFinite(n)) return;
+
+      const n = Number(trimmed.replace(',', '.'));
+
+      if (!Number.isFinite(n)) {
+        return;
+      }
       if (!props.allowNegative && n < 0) return;
+
       props.onValueChange(n);
     } else {
-      props.onValueChange(raw);
+      const next = raw === '' ? undefined : raw;
+      props.onValueChange(next);
     }
   };
 
@@ -52,7 +59,9 @@ export function Input(props: InputProps) {
   );
 
   const stringValue =
-    props.kind === 'number' ? String(props.value ?? '') : (props.value ?? '');
+    props.kind === 'number'
+      ? (props.value === undefined ? '' : String(props.value))
+      : (props.value ?? '');
 
   return (
     <div className="flex flex-col gap-3">
@@ -69,11 +78,7 @@ export function Input(props: InputProps) {
       </div>
 
       <div className="relative">
-        <img
-          className="absolute left-4 top-[18px]"
-          src="/user-icon.svg"
-          alt=""
-        />
+        <img className="absolute left-4 top-[18px]" src="/user-icon.svg" alt="" />
         <input
           id={id}
           className={inputClassName}

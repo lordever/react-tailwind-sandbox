@@ -14,7 +14,7 @@ const Value: FC<TipCardValueProps> = ({ kind, subLabel, label }) => {
   const price = kind === 'amount' ? amount : total;
 
   return (
-    <div className="flex flex-row justify-between items-center">
+    <div className="flex flex-row items-center justify-between gap-24">
       <div className="flex flex-col gap-1">
         <h5 className="text-preset-5 text-white">{label}</h5>
         <p className="text-preset-6 text-gray-400">{subLabel}</p>

@@ -1,13 +1,48 @@
-import React, { FC, memo, PropsWithChildren } from 'react';
+import React, {
+  FC,
+  memo,
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { TipCardContext } from './tip-card.context';
 import clsx from 'clsx';
-import { TipCard } from './tip-card.types';
+import { useTipCalculator } from '../tip-calculator/tip-calculator.context';
 
-type RootProps = PropsWithChildren<TipCard>;
+const percentOf = (p: number, n: number) => (n * p) / 100;
 
-const Root: FC<RootProps> = ({ amount, total, onReset, resetDisabled, children }) => {
+const Root: FC<PropsWithChildren> = ({ children }) => {
+  const { state, actions } = useTipCalculator();
+  const { bill, selectedTipPercent, numberOfPeople } = state;
+  const { resetAll } = actions;
+
+  const [amount, setAmount] = useState<number>(0);
+  const [total, setTotal] = useState<number>(0);
+  const [resetDisabled, setResetDisabled] = useState<boolean>(true);
+
+  const handleReset = useCallback(() => {
+    setAmount(0);
+    setTotal(0);
+    resetAll();
+  }, [resetAll]);
+
+  useEffect(() => {
+    if (numberOfPeople && selectedTipPercent && bill && numberOfPeople > 0) {
+      const tipAmountByPerson =
+        percentOf(selectedTipPercent, bill) / numberOfPeople;
+      setAmount(tipAmountByPerson);
+      setTotal(tipAmountByPerson + bill);
+      setResetDisabled(false);
+    } else {
+      setResetDisabled(true);
+    }
+  }, [bill, numberOfPeople, selectedTipPercent]);
+
   return (
-    <TipCardContext.Provider value={{ amount, total, onReset, resetDisabled }}>
+    <TipCardContext.Provider
+      value={{ amount, total, onReset: handleReset, resetDisabled }}
+    >
       <section
         className={clsx(
           'rounded-md bg-green-900 p-[38px] text-white',

@@ -10,8 +10,8 @@ const TipCalculatorNumberOfPeopleInput = () => {
   const [error, setError] = useState<string | undefined>();
 
   const handleSetNumberOfPeople = useCallback(
-    (value: number) => {
-      if (value <= 0) {
+    (value: number | undefined) => {
+      if (value && value <= 0) {
         setError("Can't be zero");
       } else {
         setError(undefined);

@@ -3,7 +3,9 @@ import React, {
   PropsWithChildren,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import {
@@ -12,42 +14,73 @@ import {
   TipCalculatorContextValue,
 } from './tip-calculator.types';
 
-const TipStateContext = createContext<TipCalculatorState | undefined>(
-  undefined,
-);
-const TipActionsContext = createContext<TipCalculatorActions | undefined>(
-  undefined,
-);
+const TipStateContext = createContext<TipCalculatorState | undefined>(undefined);
+const TipActionsContext = createContext<TipCalculatorActions | undefined>(undefined);
 
-export function TipCalculatorProvider(props: PropsWithChildren<TipCalculatorState>) {
-  const [bill, setBill] = useState(props.bill ?? 0);
-  const [selectedTipPercent, _setSelectedTipPercent] = useState(
-    props.selectedTipPercent ?? 15,
+export function TipCalculatorProvider(
+  props: PropsWithChildren<TipCalculatorState>,
+) {
+  const [bill, setBillState] = useState<number | undefined>(props.bill);
+  const [selectedTipPercent, _setSelectedTipPercent] = useState<number | undefined>(
+    props.selectedTipPercent,
   );
-  const [numberOfPeople, setNumberOfPeople] = useState(props.numberOfPeople ?? 1);
+  const [numberOfPeople, setNumberOfPeopleState] = useState<number | undefined>(
+    props.numberOfPeople,
+  );
+
+  const initialRef = useRef<Pick<TipCalculatorState, 'bill' | 'selectedTipPercent' | 'numberOfPeople'>>({
+    bill: props.bill,
+    selectedTipPercent: props.selectedTipPercent,
+    numberOfPeople: props.numberOfPeople,
+  });
+
+
+  useEffect(() => {
+    if (
+      selectedTipPercent !== undefined &&
+      !props.allowedPercents.includes(selectedTipPercent)
+    ) {
+      _setSelectedTipPercent(undefined);
+    }
+  }, [props.allowedPercents, selectedTipPercent]);
+
+  const setBill = useCallback((value: number | undefined) => {
+    if (value === undefined) {
+      setBillState(undefined);
+      return;
+    }
+    setBillState(Number.isFinite(value) ? Math.max(0, value) : undefined);
+  }, []);
 
   const setSelectedTipPercent = useCallback(
-    (value: number) => {
-      if (props.allowedPercents && !props.allowedPercents.includes(value)) return;
+    (value: number | undefined) => {
+      if (value === undefined) {
+        _setSelectedTipPercent(undefined);
+        return;
+      }
+      if (!props.allowedPercents.includes(value)) {
+        return;
+      }
       _setSelectedTipPercent(value);
     },
     [props.allowedPercents],
   );
 
-  const safeSetBill = useCallback((value: number) => {
-    setBill(Number.isFinite(value) ? Math.max(0, value) : 0);
-  }, []);
-
-  const safeSetPeople = useCallback((value: number) => {
+  const setNumberOfPeople = useCallback((value: number | undefined) => {
+    if (value === undefined) {
+      setNumberOfPeopleState(undefined);
+      return;
+    }
     const v = Math.floor(value);
-    setNumberOfPeople(v > 0 ? v : 1);
+    setNumberOfPeopleState(v > 0 ? v : 1);
   }, []);
 
-  const reset = useCallback(() => {
-    setBill(bill ?? 0);
-    _setSelectedTipPercent(selectedTipPercent ?? 15);
-    setNumberOfPeople(numberOfPeople ?? 1);
-  }, [bill, selectedTipPercent, numberOfPeople]);
+  const resetAll = useCallback(() => {
+    setBillState(initialRef.current.bill);
+    _setSelectedTipPercent(initialRef.current.selectedTipPercent);
+    setNumberOfPeopleState(initialRef.current.numberOfPeople);
+  }, []);
+
 
   const state = useMemo<TipCalculatorState>(
     () => ({
@@ -61,12 +94,12 @@ export function TipCalculatorProvider(props: PropsWithChildren<TipCalculatorStat
 
   const actions = useMemo<TipCalculatorActions>(
     () => ({
-      setBill: safeSetBill,
+      setBill,
       setSelectedTipPercent,
-      setNumberOfPeople: safeSetPeople,
-      reset,
+      setNumberOfPeople,
+      resetAll,
     }),
-    [safeSetBill, setSelectedTipPercent, safeSetPeople, reset],
+    [setBill, setSelectedTipPercent, setNumberOfPeople, resetAll],
   );
 
   return (
@@ -80,17 +113,13 @@ export function TipCalculatorProvider(props: PropsWithChildren<TipCalculatorStat
 
 export function useTipState() {
   const ctx = useContext(TipStateContext);
-  if (!ctx)
-    throw new Error('useTipState must be used within <TipCalculatorProvider/>');
+  if (!ctx) throw new Error('useTipState must be used within <TipCalculatorProvider/>');
   return ctx;
 }
 
 export function useTipActions() {
   const ctx = useContext(TipActionsContext);
-  if (!ctx)
-    throw new Error(
-      'useTipActions must be used within <TipCalculatorProvider/>',
-    );
+  if (!ctx) throw new Error('useTipActions must be used within <TipCalculatorProvider/>');
   return ctx;
 }
 
